@@ -12,16 +12,26 @@ print(query_str)
 
 # COMMAND ----------
 
+r = requests.get(query_str)
+data = r.json()
+entries = data["records"]
+
+
+# COMMAND ----------
+
 df = pd.DataFrame(entries).sort_values(by = ['SpotPriceDKK'])
 df_data = df[['HourDK','SpotPriceDKK','PriceArea']]
-print(df_data.head(1))
+dict_data = df_data.to_dict()
+print(dict_data['SpotPriceDKK'])
 
 # COMMAND ----------
 
 rslt_df = df_data[(df_data['PriceArea'] == 'DK2')] 
 #>>> df.loc[df['Host'] == 'a', 'Port'].item()
 text_str = rslt_df.loc[(df_data['PriceArea'] == 'DK2')].values[0]
-print(text_str)
+type(text_str)
+#print(text_str)
+#print(df_data['SpotPriceDKK']/1000)
 
 # COMMAND ----------
 
